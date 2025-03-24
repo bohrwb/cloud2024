@@ -11,3 +11,70 @@ spring:
       discovery:
         service-name: ${spring.application.name}
         prefer-ip-address: true # 优先使用服务ip进行注册
+    openfeign:
+      client:
+        config:
+          cloud-payment-service:
+            connect-timeout: 20000
+            read-timeout: 20000
+      httpclient:
+        hc5:
+          enabled: true
+      compression:
+        request:
+          enabled: true
+          min-request-size: 2048
+          mime-types: text/xml, application/xml, application/json
+        response:
+          enabled: true
+      circuitbreaker:
+        enabled: true
+#        group:
+#          enabled: true # 没开分组永远不用分组的配置。精确优先、分组次之(开了分组)、默认最后
+
+resilience4j:
+#  circuitbreaker:
+#    configs:
+#      default:
+#        failure-rate-threshold: 50
+#        sliding-window-type: COUNT_BASED
+#        sliding-window-size: 6
+#        minimum-number-of-calls: 4
+#        automatic-transition-from-open-to-half-open-enabled: true
+#        wait-duration-in-open-state: 5s
+#        permitted-number-of-calls-in-half-open-state: 2
+#        record-exceptions:
+#          - java.lang.Exception
+#    instances:
+#      cloud-payment-service:
+#        base-config: default
+#  bulkhead:
+#    configs:
+#      default:
+#        max-concurrent-calls: 2
+#        max-wait-duration: 1s
+#    instances:
+#      cloud-payment-service:
+#        base-config: default
+#  timelimiter:
+#    configs:
+#      default:
+#        timeout-duration: 10s
+#  thread-pool-bulkhead:
+#    configs:
+#      default:
+#        max-thread-pool-size: 1
+#        core-thread-pool-size: 1
+#        queue-capacity: 1
+#    instances:
+#      cloud-payment-service:
+#        base-config: default
+  ratelimiter:
+    configs:
+      default:
+        limit-for-period: 2
+        limit-refresh-period: 1s
+        timeout-duration: 1
+    instances:
+      cloud-payment-service:
+        base-config: default

@@ -5,7 +5,6 @@ import com.atguigu.cloud.entities.PayDTO;
 import com.atguigu.cloud.resp.ResultData;
 import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.client.RestTemplate;
 
 /**
  * @author wangbo
@@ -30,5 +29,4 @@ public class OrderController {
     public String getInfoByConsul() {
         return payFeignApi.mylb();
     }
-
 }
